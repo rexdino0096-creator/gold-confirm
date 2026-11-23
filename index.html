@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#081321">
+<meta name="description" content="Aplikasi percuma XAUUSD: analisis automatik M5 M15 M30 menggunakan candle harga sebenar daripada data awam. Tidak hantar order broker.">
+<title>GOLD CONFIRM • XAUUSD AUTO</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<style>
+:root{color-scheme:dark;--bg:#071320;--panel:#102337;--panel2:#152d43;--line:#2a465c;--txt:#eef4ff;--muted:#aebfd1;--gold:#f5ce7a;--green:#54e1ad;--red:#ff8794;--gray:#bcc5d3}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b344a,var(--bg) 600px);color:var(--txt);font:15px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif}main{max-width:1040px;margin:auto;padding:14px 12px 44px}header{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;gap:8px}.brand{font-size:19px;font-weight:900;letter-spacing:.3px}.brand b{color:var(--gold)}.subtitle{font-size:11px;color:var(--muted);font-weight:500}.tag{border:1px solid var(--line);color:#e7d2a1;font-size:11px;border-radius:999px;padding:6px 10px;white-space:nowrap}.card{border:1px solid var(--line);background:var(--panel);border-radius:17px;overflow:hidden;margin-bottom:13px}.head{padding:14px 15px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}.head h2{font-size:14px;margin:0}.head span{color:var(--muted);font-size:11px}.signalArea{text-align:center;background:linear-gradient(145deg,#19374b,#0b2135);padding:20px 16px 18px}.signalArea .eyebrow{color:var(--muted);letter-spacing:1.6px;font-weight:750;font-size:11px}.signal{font-size:clamp(30px,7vw,42px);font-weight:950;line-height:1.2;margin:7px 0 4px;color:var(--gold)}.signal.buy{color:var(--green)}.signal.sell{color:var(--red)}.signal.wait{color:var(--gold)}#reason{max-width:600px;margin:0 auto;color:#d9e6f2;font-size:13px}#sourceState{margin:15px auto 0;font-size:11px;color:var(--muted)}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:5px}.dot.ok{background:var(--green)}.dot.fail{background:var(--red)}.actions{display:flex;align-items:center;gap:10px;justify-content:center;padding:12px 16px;border-top:1px solid var(--line)}button{border:1px solid #52718a;background:#1d4058;color:#fff;border-radius:10px;padding:9px 15px;font:inherit;font-weight:750;cursor:pointer}button:disabled{opacity:.45}.time{font-size:12px;color:var(--muted)}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:13px}.tile{border:1px solid var(--line);background:var(--panel);border-radius:15px;padding:15px 12px;min-height:138px}.tile .tf{color:var(--muted);font-size:12px}.tile .value{font-size:22px;font-weight:850;color:var(--gold);margin:9px 0 4px}.tile .value.buy{color:var(--green)}.tile .value.sell{color:var(--red)}.tile .why{font-size:11px;color:#aebfd1}.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.8fr);gap:13px}.chart{height:490px;padding:0 6px 7px}.tradingview-widget-container,.tradingview-widget-container__widget{width:100%;height:100%}.explainer{padding:0 15px 14px;font-size:13px;color:#c0d0df}.explainer p{margin:10px 0}.explainer ol{padding-left:20px;margin:10px 0}.explainer li{margin:7px 0}.summary{border-top:1px solid var(--line);font-size:12px;color:#b9cad9;padding:12px 15px}.notice{border:1px solid #655638;background:#2c291e;color:#f4dba7;border-radius:14px;padding:13px 15px;font-size:12px;margin-top:5px}footer{font-size:12px;color:#b0bfd0;margin-top:17px}a{color:#f4cb7a}.price{font-size:24px;font-weight:800;color:#fff;margin:2px 0}.muted{color:var(--muted)}.small{font-size:11px}.switch{display:flex;gap:8px;margin:10px 15px 0} .switch button{flex:1;background:#102d40;font-size:12px;padding:6px}
+@media(max-width:760px){.layout{grid-template-columns:1fr}.chart{height:420px}}@media(max-width:460px){.tiles{gap:6px}.tile{min-height:130px;padding:11px 9px}.tile .value{font-size:18px}.tile .why{font-size:10px}.chart{height:415px}.actions{justify-content:space-between}.time{font-size:11px}.signalArea{padding:18px 10px}}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="brand">✦ GOLD <b>CONFIRM</b></div><div class="subtitle">XAUUSD • Auto Signal M5 / M15 / M30</div></div><span class="tag">V3.1 • AUTO</span></header>
+<section class="card">
+ <div class="signalArea" role="status" aria-live="polite">
+  <div class="eyebrow">PENGESAHAN ARAH AUTOMATIK</div>
+  <div id="signal" class="signal wait">MEMUAT DATA…</div>
+  <p id="reason">Membaca candle M5, M15 dan M30.</p>
+  <div id="sourceState"><span class="dot"></span>Semak sambungan sumber harga…</div><p style="margin:7px auto 0;font-size:11px;color:#b9cbdf">Jika gagal: cuba butang Semak sekarang dan periksa mesej sebab yang keluar.</p>
+ </div>
+ <div class="actions"><button id="refresh" type="button">↻ Semak sekarang</button><span id="updated" class="time">Belum disemak</span></div>
+</section>
+<section class="tiles" aria-label="Ringkasan timeframe">
+ <div class="tile"><div class="tf">M5 • Entry</div><div id="m5state" class="value">—</div><div id="m5why" class="why">Belum ada data</div></div>
+ <div class="tile"><div class="tf">M15 • Sahkan</div><div id="m15state" class="value">—</div><div id="m15why" class="why">Belum ada data</div></div>
+ <div class="tile"><div class="tf">M30 • Arah utama</div><div id="m30state" class="value">—</div><div id="m30why" class="why">Belum ada data</div></div>
+</section>
+<div class="layout">
+ <section class="card">
+  <div class="head"><h2>📊 Carta candle XAUUSD</h2><span>TradingView • OANDA</span></div>
+  <div class="chart"><div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>{"autosize":true,"symbol":"OANDA:XAUUSD","interval":"15","timezone":"Asia/Kuala_Lumpur","theme":"dark","style":"1","locale":"en","backgroundColor":"#102337","gridColor":"rgba(124,146,175,.09)","allow_symbol_change":false,"hide_side_toolbar":false,"hide_top_toolbar":false,"save_image":true,"withdateranges":true}</script></div></div>
+ </section>
+ <aside>
+  <section class="card"><div class="head"><h2>Bagaimana signal dikira?</h2></div><div class="explainer">
+  <p>Aplikasi membaca <b>candle yang sudah ditutup</b>, kemudian mengira EMA dan Stochastic secara automatik.</p>
+  <ol><li><b>M30</b> perlu mengesahkan arah utama.</li><li><b>M15</b> perlu ikut arah yang sama.</li><li><b>M5</b> perlu menunjukkan momentum dan harga melepasi candle sebelumnya.</li></ol>
+  <p><b>BUY</b> hanya jika semua menyokong NAIK. <b>SELL</b> jika semua menyokong TURUN. Jika tidak, <b>TUNGGU</b>.</p>
+  <p class="muted small">Formula v3: EMA20/EMA50, Stochastic (14,3,3), harga tutup dan candle sebelumnya. Ini peraturan automatik, bukan model AI yang dilatih.</p>
+  </div><div class="summary">Tiada lagi pilihan manual. App cuba mengemas kini setiap <b>60 saat</b> semasa dibuka. Pada Android, penutupan tab menghentikan semakan hingga tab dibuka lagi.</div></section>
+  <section class="card"><div class="head"><h2>Harga rujukan</h2></div><div class="explainer"><div id="lastPrice" class="price">—</div><div id="priceAt" class="small muted">Data: Biquote (mid-price)</div><p class="small muted">Harga sumber signal boleh berbeza daripada carta TradingView dan MT5 broker kau.</p></div></section>
+ </aside>
+</div>
+<div class="notice"><b>Penting:</b> Ini signal arah <b>eksperimen</b>, belum terbukti menguntungkan. Bukan auto BUY/SELL pada akaun MT5 dan bukan jaminan entry. Jika data gagal, lapuk atau market tutup, aplikasi memaparkan TUNGGU. Jangan gunakan sebagai satu-satunya alasan untuk trade wang sebenar.</div>
+<footer>Sumber candle: <a href="https://biquote.io/docs/" target="_blank" rel="noopener">Biquote public OHLC API</a>. Carta: <a href="https://www.tradingview.com/symbols/XAUUSD/?exchange=OANDA" target="_blank" rel="noopener">TradingView / OANDA</a>. Internet diperlukan. <span class="muted">Laptop dan VPS tidak diperlukan untuk analisis semasa app terbuka; selepas diterbitkan sebagai laman HTTPS, app boleh diakses dari Android.</span></footer>
+<section style="padding:13px 15px;margin:15px 0;border:1px solid #2a465c;border-radius:12px;background:#102337;font-size:13px;color:#b8cada">
+<b style="color:#f5ce7a">Pasang pada Android:</b> Selepas aplikasi diterbitkan sebagai laman HTTPS, buka URL di Chrome, tekan menu <b>⋮</b> → <b>Tambahkan ke skrin utama</b> / <b>Install app</b>.
+<div style="margin-top:4px">Signal automatik berjalan semasa aplikasi dibuka. Aplikasi tidak menghantar order ke MT5 dan tidak memberi notifikasi apabila ditutup.</div>
+</section>
+</main><script>
+'use strict';
+/* All calculations run locally in the browser using public OHLC data. No order-placement functions. */
+const DATA_SOURCE = 'https://biquote.io/api/XAUUSD';
+const INTERVALS = [
+  {name:'M5', query:'5m', minutes:5},
+  {name:'M15',query:'15m',minutes:15},
+  {name:'M30',query:'30m',minutes:30}
+];
+const $=id=>document.getElementById(id);
+const delayAbort=ms=>{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),ms);return {controller,clear:()=>clearTimeout(timeout)}};
+let refreshing=false;
+const fmt=(n,d=2)=>Number.isFinite(n)?Number(n).toFixed(d):'—';
+function ema(series,period){
+ if(series.length<period)return NaN;
+ const alpha=2/(period+1);
+ let value=series.slice(0,period).reduce((a,b)=>a+b,0)/period;
+ for(let i=period;i<series.length;i++)value=(series[i]-value)*alpha+value;
+ return value;
+}
+function stoch(bars,lookback=14,kSmooth=3,dSmooth=3){
+ const raw=[];
+ for(let i=lookback-1;i<bars.length;i++){
+  const chunk=bars.slice(i-lookback+1,i+1);
+  const low=Math.min(...chunk.map(x=>x.low)), high=Math.max(...chunk.map(x=>x.high));
+  raw.push(high>low?100*(bars[i].close-low)/(high-low):50);
+ }
+ const smoothK=[];
+ for(let i=kSmooth-1;i<raw.length;i++)smoothK.push(raw.slice(i-kSmooth+1,i+1).reduce((a,b)=>a+b,0)/kSmooth);
+ const smoothD=[];
+ for(let i=dSmooth-1;i<smoothK.length;i++)smoothD.push(smoothK.slice(i-dSmooth+1,i+1).reduce((a,b)=>a+b,0)/dSmooth);
+ return {k:smoothK.at(-1),d:smoothD.at(-1)};
+}
+function parseCandles(input){
+ if(!input||!Array.isArray(input.bars))throw new Error('Format data candle tidak sah');
+ const bars=input.bars.filter(b=>!b.isOpen).map(b=>({
+  time:new Date(b.openTime).getTime(),open:Number(b.open), high:Number(b.high),low:Number(b.low),close:Number(b.close)
+ })).filter(b=>Number.isFinite(b.time)&&[b.open,b.high,b.low,b.close].every(Number.isFinite)&&b.high>=b.low);
+ bars.sort((a,b)=>a.time-b.time);
+ const seen=new Set();return bars.filter(b=>{if(seen.has(b.time))return false;seen.add(b.time);return true;});
+}
+function indicators(bars){
+ if(bars.length<58)throw new Error('Candle belum mencukupi untuk indikator');
+ const closes=bars.map(b=>b.close);
+ const last=bars.at(-1),prev=bars.at(-2);
+ const e20=ema(closes,20),e50=ema(closes,50),e20prev=ema(closes.slice(0,-3),20);
+ const {k,d}=stoch(bars);
+ if(![e20,e50,e20prev,k,d].every(Number.isFinite))throw new Error('Indikator belum lengkap');
+ const rising = last.close>prev.close;
+ const falling = last.close<prev.close;
+ const baseBuy=e20>e50 && e20>e20prev && last.close>e20;
+ const baseSell=e20<e50 && e20<e20prev && last.close<e20;
+ const momentumBuy=k>d && k<95;
+ const momentumSell=k<d && k>5;
+ return {last,prev,e20,e50,k,d,baseBuy,baseSell,momentumBuy,momentumSell,rising,falling};
+}
+function assess(frame,bars){
+ const ind=indicators(bars); const isEntry=frame.name==='M5';
+ const buy=ind.baseBuy&&ind.momentumBuy&&ind.rising&&(!isEntry||ind.last.close>ind.prev.high);
+ const sell=ind.baseSell&&ind.momentumSell&&ind.falling&&(!isEntry||ind.last.close<ind.prev.low);
+ const direction=buy?'BUY':sell?'SELL':'TUNGGU';
+ let why='Trend, Stochastic atau candle belum selari';
+ if(direction==='BUY')why='Harga NAIK • trend & momentum searah';
+ else if(direction==='SELL')why='Harga TURUN • trend & momentum searah';
+ else if(isEntry&&ind.baseBuy&&ind.momentumBuy&&! (ind.last.close>ind.prev.high))why='Belum melepasi harga tinggi candle sebelumnya';
+ else if(isEntry&&ind.baseSell&&ind.momentumSell&&! (ind.last.close<ind.prev.low))why='Belum turun bawah candle sebelumnya';
+ else if(ind.baseBuy||ind.baseSell)why='Stochastic atau candle belum menyokong';
+ return {...ind,direction,why};
+}
+function uiFrame(frame,state){const id=frame.name.toLowerCase();const el=$(id+'state');
+ el.textContent=state.direction;el.className='value '+(state.direction==='BUY'?'buy':state.direction==='SELL'?'sell':'');
+ $(id+'why').textContent=state.why;
+}
+function setSignal(status,reason,state='wait'){
+ $('signal').textContent=status; $('signal').className='signal '+state;
+ $('reason').textContent=reason;
+}
+function setFeed(ok,text){$('sourceState').innerHTML='<span class="dot '+(ok?'ok':'fail')+'"></span>'+text;}
+function setError(why){setSignal('TUNGGU',why);setFeed(false,'Data tidak tersedia / tidak segar');
+ for(const frame of INTERVALS)uiFrame(frame,{direction:'—',why:'Tiada pengesahan data'});
+ $('lastPrice').textContent='—';$('priceAt').textContent='Tidak dapat mengesahkan harga terbaru';}
+async function fetchJSON(url){
+ const {controller,clear}=delayAbort(12000);
+ try{const response=await fetch(url,{signal:controller.signal,cache:'no-store'});
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  return await response.json();
+ }finally{clear();}
+}
+async function refresh(){
+ if(refreshing)return;refreshing=true;$('refresh').disabled=true;$('refresh').textContent='Memeriksa…';
+ try{
+  const [quote,...responses]=await Promise.all([
+   fetchJSON(DATA_SOURCE+'?allowStale=true'),
+   ...INTERVALS.map(f=>fetchJSON(DATA_SOURCE+'/ohlc?interval='+encodeURIComponent(f.query)+'&limit=130'))
+  ]);
+  if(quote.marketState==='closed'||quote.stale===true||!Number.isFinite(Number(quote.mid))){
+   throw new Error('Market tutup atau harga terlalu lama.');
+  }
+  if(Number.isFinite(Number(quote.quoteAgeSeconds))&&Number(quote.quoteAgeSeconds)>300){
+   throw new Error('Harga sudah lebih 5 minit.');
+  }
+  const serverTime=new Date(quote.timestamp).getTime();
+  if(!Number.isFinite(serverTime)||Math.abs(Date.now()-serverTime)>5*60*1000){
+   throw new Error('Masa harga terbaru tidak dapat disahkan.');
+  }
+  const assessed={};
+  for(let i=0;i<INTERVALS.length;i++){
+   const frame=INTERVALS[i];const bars=parseCandles(responses[i]);
+   const state=assess(frame,bars);
+   // A closed candle should have ended in the past two bars' window.
+   const endTime=state.last.time+frame.minutes*60*1000;
+   const age=Date.now()-endTime;
+   if(age< -2*60*1000||age>(frame.minutes+6)*60*1000)throw new Error('Data '+frame.name+' sudah lapuk atau masa tidak selari.');
+   assessed[frame.name]=state;
+  }
+  for(const frame of INTERVALS)uiFrame(frame,assessed[frame.name]);
+  const names=['M5','M15','M30'];
+  const buy=names.every(t=>assessed[t].direction==='BUY');
+  const sell=names.every(t=>assessed[t].direction==='SELL');
+  if(buy)setSignal('BUY — DISAHKAN','M5, M15 dan M30 serentak menunjukkan NAIK. Ini pengesahan teknikal, bukan jaminan untung.','buy');
+  else if(sell)setSignal('SELL — DISAHKAN','M5, M15 dan M30 serentak menunjukkan TURUN. Ini pengesahan teknikal, bukan jaminan untung.','sell');
+  else {
+   const directions=names.map(n=>n+': '+assessed[n].direction).join(' · ');
+   setSignal('TUNGGU','Belum cukup pengesahan. '+directions+'.','wait');
+  }
+  const price=Number(quote.mid);
+  $('lastPrice').textContent='$'+fmt(price,2);
+  $('priceAt').textContent='Harga rujukan: '+new Date(serverTime).toLocaleTimeString('ms-MY',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',second:'2-digit'})+' MYT';
+  $('updated').textContent='Disemak '+new Date().toLocaleTimeString('ms-MY',{hour:'2-digit',minute:'2-digit'});
+  setFeed(true,'Data sah • Biquote (bukan broker MT5)');
+ }catch(err){
+  setError('Belum boleh sahkan BUY/SELL: '+(err.message||'Ralat sambungan')+' Cuba semula atau periksa internet.');
+  $('updated').textContent='Semakan gagal';
+ }finally{refreshing=false;$('refresh').disabled=false;$('refresh').textContent='↻ Semak sekarang';}
+}
+$('refresh').addEventListener('click',refresh);
+refresh();
+setInterval(()=>{if(!document.hidden)refresh();},60*1000);
+window.addEventListener('online',refresh);
+window.addEventListener('offline',()=>setError('Telefon tiada internet.'));
+if('serviceWorker'in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if(typeof module!=='undefined'&&module.exports)module.exports={ema,stoch,indicators,assess,parseCandles};
+
+</script>
+</body></html>
