@@ -226,3 +226,7 @@ if __name__ == '__main__':
             print('Ralat:', exc, file=sys.stderr)
         else:
             print('Jenis ralat:', type(exc).__name__, file=sys.stderr)
+            
+        else:
+            print('Jenis ralat:', type(exc).__name__, file=sys.stderr)
+        sys.exit(1)
