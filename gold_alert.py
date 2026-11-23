@@ -225,5 +225,4 @@ if __name__ == '__main__':
         if isinstance(exc, RuntimeError):
             print('Ralat:', exc, file=sys.stderr)
         else:
-            print('Ralat semakan data atau sambungan. Tidak menghantar signal.', file=sys.stderr)
-        sys.exit(1)
+            print('Jenis ralat:', type(exc).__name__, file=sys.stderr)
