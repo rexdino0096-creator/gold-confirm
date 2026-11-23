@@ -1,0 +1,52 @@
+
+name: GOLD CONFIRM Telegram
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_telegram:
+        description: "Uji mesej Telegram"
+        type: boolean
+        default: true
+  schedule:
+    - cron: "2/5 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-confirm-telegram
+  cancel-in-progress: false
+
+jobs:
+  alerts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Baca fail
+        uses: actions/checkout@v4
+
+      - name: Semak XAUUSD
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TEST_ONLY: ${{ inputs.test_telegram }}
+        run: |
+          if [ "$TEST_ONLY" = "true" ]; then
+            python3 gold_alert.py --test
+          else
+            python3 gold_alert.py
+          fi
+
+      - name: Simpan status signal
+        if: github.event_name == 'schedule' || inputs.test_telegram == false
+        run: |
+          if [ -f .github/gold_signal_state.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .github/gold_signal_state.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Update signal state [skip ci]"
+              git push
+            fi
+          fi
