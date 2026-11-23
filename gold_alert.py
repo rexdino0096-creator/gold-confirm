@@ -217,16 +217,13 @@ def run():
     print('Keadaan signal disimpan:', signal)
 
 
+
 if __name__ == '__main__':
     try:
         run()
     except Exception as exc:
-        # API token may appear in urllib errors. Do not print details of unknown network exceptions.
         if isinstance(exc, RuntimeError):
             print('Ralat:', exc, file=sys.stderr)
-        else:
-            print('Jenis ralat:', type(exc).__name__, file=sys.stderr)
-            
         else:
             print('Jenis ralat:', type(exc).__name__, file=sys.stderr)
         sys.exit(1)
